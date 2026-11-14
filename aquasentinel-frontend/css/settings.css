@@ -1,0 +1,7 @@
+.settings-container { width: 480px; }
+.settings-form { margin: 25px 0; text-align: left; }
+.setting-item { display: flex; justify-content: space-between; align-items: center; background: rgba(1, 10, 24, 0.6); border: 1px solid rgba(0, 229, 255, 0.25); padding: 15px 20px; border-radius: 8px; margin-bottom: 15px; }
+.setting-item label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; color: #8ab4f8; }
+.setting-item input[type="checkbox"] { width: 20px; height: 20px; accent-color: #00e5ff; cursor: pointer; }
+.setting-item select { background: rgba(2, 11, 26, 0.9); border: 1px solid #00e5ff; color: #00e5ff; padding: 6px 12px; border-radius: 6px; font-weight: bold; outline: none; }
+.save-msg { color: #00ffaa; font-size: 12px; text-align: center; height: 18px; margin-top: 10px; }

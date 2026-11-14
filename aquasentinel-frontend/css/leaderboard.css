@@ -1,0 +1,6 @@
+.leaderboard-container { width: 620px; }
+.table-wrapper { margin-top: 20px; max-height: 280px; overflow-y: auto; border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 8px; }
+.leaderboard-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+.leaderboard-table th { background: rgba(0, 180, 216, 0.2); color: #00e5ff; font-family: 'Orbitron', sans-serif; font-size: 11px; letter-spacing: 1.5px; padding: 12px; }
+.leaderboard-table td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); color: #e0f7fa; }
+.leaderboard-table tr:hover { background: rgba(0, 229, 255, 0.08); }

@@ -1,0 +1,7 @@
+.profile-container { width: 550px; text-align: center; }
+.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
+.profile-card { background: rgba(1, 10, 24, 0.6); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 10px; padding: 20px; }
+.profile-card h3 { font-size: 11px; letter-spacing: 2px; color: #8ab4f8; margin-bottom: 8px; }
+.stat-highlight { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00ffaa; text-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
+.stat-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00e5ff; }
+.profile-actions { margin-top: 20px; }

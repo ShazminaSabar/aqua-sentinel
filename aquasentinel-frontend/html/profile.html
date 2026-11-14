@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Sentinel - Commander Dossier</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=stylesheet" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+
+<!--
+      Base template structured with AI.
+      Relative pathing (../) and specific UI data mapping customized by me.
+ -->
+
+<body>
+<div class="ocean-bg">
+    <div class="light-rays"></div>
+    <div class="sonar-grid"></div>
+    <div class="ocean-floor"><div class="coral-silhouette"></div></div>
+</div>
+
+<div class="glass-container profile-container">
+    <div class="hud-corner top-left"></div>
+    <div class="hud-corner top-right"></div>
+    <div class="hud-corner bottom-left"></div>
+    <div class="hud-corner bottom-right"></div>
+
+    <div class="status-badge"><span class="pulse-dot"></span> COMMAND RECORD // DOSSIER</div>
+    <h1 class="game-title">COMMANDER PROFILE</h1>
+
+    <div class="profile-grid">
+        <div class="profile-card">
+            <h3>CALLSIGN</h3>
+            <p id="profile-username" class="stat-highlight">Loading...</p>
+        </div>
+        <div class="profile-card">
+            <h3>HIGHEST SCORE</h3>
+            <p id="profile-highscore" class="stat-highlight">0</p>
+        </div>
+        <div class="profile-card">
+            <h3>GAMES PLAYED</h3>
+            <p id="profile-games" class="stat-value">0</p>
+        </div>
+        <div class="profile-card">
+            <h3>HIGHEST WAVE</h3>
+            <p id="profile-wave" class="stat-value">0</p>
+        </div>
+    </div>
+
+    <div class="profile-actions">
+        <a href="../index.html" class="btn-secondary">« RETURN TO COMMAND MENU</a>
+    </div>
+</div>
+
+<script src="../js/profile.js"></script>
+</body>
+</html>
