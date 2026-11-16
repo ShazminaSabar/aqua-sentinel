@@ -6,24 +6,21 @@
     <title>Aqua Sentinel - Defend. Respond. Survive.</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=stylesheet" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ANIMATED IMMERSIVE UNDERWATER ENVIRONMENT -->
 <div class="ocean-bg">
     <div class="light-rays"></div>
     <div class="sonar-grid"></div>
     <div class="sonar-sweep"></div>
     <div id="blips-container"></div>
-    <div class="ocean-floor">
-        <div class="coral-silhouette"></div>
-    </div>
+    <div class="ocean-floor"><div class="coral-silhouette"></div></div>
     <div id="bubbles-container" class="bubbles"></div>
 </div>
 
-<!-- SCREEN 1 & 2: LOGIN / REGISTRATION MODAL -->
+<!-- LOGIN / REGISTRATION MODAL -->
 <div id="auth-screen" class="screen active">
     <div class="glass-container hud-frame">
         <div class="hud-corner top-left"></div>
@@ -31,13 +28,7 @@
         <div class="hud-corner bottom-left"></div>
         <div class="hud-corner bottom-right"></div>
 
-        <div class="status-badge">
-            <span class="pulse-dot"></span> SYSTEM ONLINE // SECTOR 07
-        </div>
-        <!--
-              Base HTML structure and glassmorphism UI drafted with AI assistance.
-              Layout management, div nesting, and direct CSS/JS linking manually customized by me.
-         -->
+        <div class="status-badge"><span class="pulse-dot"></span> SYSTEM ONLINE // SECTOR 07</div>
 
         <h1 class="game-title">AQUA SENTINEL</h1>
         <p class="game-subtitle">DEFEND • RESPOND • SURVIVE</p>
@@ -47,7 +38,6 @@
             <button id="tab-register-btn" class="tab-btn" onclick="switchAuthTab('register')">NEW ENLISTMENT</button>
         </div>
 
-        <!-- Login Form -->
         <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
             <div class="form-group">
                 <label for="login-username">COMMANDER ID</label>
@@ -57,12 +47,9 @@
                 <label for="login-password">SECURITY KEY</label>
                 <input type="password" id="login-password" placeholder="Enter clearance code..." required>
             </div>
-            <button type="submit" class="btn-primary">
-                <span>INITIALIZE LINK</span>
-            </button>
+            <button type="submit" class="btn-primary"><span>INITIALIZE LINK</span></button>
         </form>
 
-        <!-- Register Form -->
         <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
             <div class="form-group">
                 <label for="reg-username">ASSIGN CALLSIGN</label>
@@ -72,16 +59,14 @@
                 <label for="reg-password">CREATE SECURITY KEY</label>
                 <input type="password" id="reg-password" placeholder="Min 6 characters..." required>
             </div>
-            <button type="submit" class="btn-primary">
-                <span>REGISTER CREDENTIALS</span>
-            </button>
+            <button type="submit" class="btn-primary"><span>REGISTER CREDENTIALS</span></button>
         </form>
 
         <p id="auth-error" class="error-msg"></p>
     </div>
 </div>
 
-<!-- SCREEN 3: MAIN MENU -->
+<!-- MAIN MENU -->
 <div id="menu-screen" class="screen">
     <div class="glass-container menu-container hud-frame">
         <div class="hud-corner top-left"></div>
@@ -89,23 +74,22 @@
         <div class="hud-corner bottom-left"></div>
         <div class="hud-corner bottom-right"></div>
 
-        <div class="status-badge">
-            <span class="pulse-dot"></span> SUBMERSIBLE HULL: 100% READY
-        </div>
+        <div class="status-badge"><span class="pulse-dot"></span> SUBMERSIBLE HULL: 100% READY</div>
 
         <h1 class="game-title">AQUA SENTINEL</h1>
         <p class="welcome-text">WELCOME BACK, COMMANDER <span id="display-username" class="highlight-user">PLAYER</span></p>
 
         <div class="menu-buttons">
-            <button class="btn-menu btn-deploy" onclick="alert('Gameplay canvas loading in next step!')">
+            <a href="html/game.html" class="btn-menu btn-deploy" style="text-decoration: none;">
                 <span class="btn-icon">▶</span> DEPLOY MISSION
-            </button>
+            </a>
             <a href="html/leaderboard.html" class="btn-menu" style="text-decoration: none;">
                 <span class="btn-icon">🏆</span> FLEET LEADERBOARD
             </a>
             <a href="html/profile.html" class="btn-menu" style="text-decoration: none;">
                 <span class="btn-icon">👤</span> COMMANDER DOSSIER
             </a>
+            <!-- Links directly to the shared standalone settings page -->
             <a href="html/settings.html" class="btn-menu" style="text-decoration: none;">
                 <span class="btn-icon">⚙</span> SYSTEM CALIBRATION
             </a>
@@ -116,35 +100,6 @@
     </div>
 </div>
 
-<!-- APPLICATION SCRIPTS -->
 <script src="js/app.js"></script>
-<script>
-    // Ambient Deep-Sea Bubble Generator
-    const bubblesContainer = document.getElementById('bubbles-container');
-    for (let i = 0; i < 30; i++) {
-        const bubble = document.createElement('span');
-        const size = Math.random() * 12 + 4;
-        bubble.style.width = `${size}px`;
-        bubble.style.height = `${size}px`;
-        bubble.style.left = `${Math.random() * 100}%`;
-        bubble.style.animationDuration = `${Math.random() * 9 + 6}s`;
-        bubble.style.animationDelay = `${Math.random() * 7}s`;
-        bubblesContainer.appendChild(bubble);
-    }
-
-    // Patrolling Bioluminescent Fish / Sonar Blips Generator
-    const blipsContainer = document.getElementById('blips-container');
-    for (let i = 0; i < 6; i++) {
-        const blip = document.createElement('div');
-        blip.className = 'tactical-blip';
-        const size = Math.random() * 4 + 2;
-        blip.style.width = `${size}px`;
-        blip.style.height = `${size}px`;
-        blip.style.top = `${Math.random() * 70 + 15}%`;
-        blip.style.animationDuration = `${Math.random() * 15 + 12}s`;
-        blip.style.animationDelay = `${Math.random() * 10}s`;
-        blipsContainer.appendChild(blip);
-    }
-</script>
 </body>
 </html>

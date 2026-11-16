@@ -1,7 +1,163 @@
-.profile-container { width: 550px; text-align: center; }
-.profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 25px 0; }
-.profile-card { background: rgba(1, 10, 24, 0.6); border: 1px solid rgba(0, 229, 255, 0.25); border-radius: 10px; padding: 20px; }
-.profile-card h3 { font-size: 11px; letter-spacing: 2px; color: #8ab4f8; margin-bottom: 8px; }
-.stat-highlight { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00ffaa; text-shadow: 0 0 10px rgba(0, 255, 170, 0.5); }
-.stat-value { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #00e5ff; }
-.profile-actions { margin-top: 20px; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at center, #0b192c 0%, #01050a 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow-y: auto;
+}
+
+.ocean-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(circle at 50% -20%, rgba(0, 180, 216, 0.3) 0%, transparent 60%),
+        linear-gradient(180deg, #02142d 0%, #010a18 50%, #000408 100%);
+    pointer-events: none;
+}
+
+.profile-container {
+    width: 100%;
+    max-width: 580px;
+    margin: 20px;
+    text-align: center;
+    background: linear-gradient(160deg, rgba(6, 26, 56, 0.9) 0%, rgba(2, 11, 26, 0.95) 100%);
+    backdrop-filter: blur(18px);
+    border: 1.5px solid rgba(0, 229, 255, 0.4);
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.1);
+    position: relative;
+    z-index: 3;
+}
+
+.profile-container h1 {
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    color: #00e5ff;
+    letter-spacing: 2.5px;
+    margin-bottom: 25px;
+    font-size: 26px;
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+}
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.profile-card {
+    background: rgba(1, 10, 24, 0.7);
+    border: 1.5px solid rgba(0, 229, 255, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.05);
+}
+
+.card-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #8ab4f8;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.stat-highlight {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    color: #00ffaa;
+    text-shadow: 0 0 12px rgba(0, 255, 170, 0.6);
+}
+
+.stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    color: #00e5ff;
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+}
+
+.achievements-section {
+    margin-top: 30px;
+    text-align: left;
+}
+
+.achievements-section h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #8ab4f8;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.achievement-badge {
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.35);
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    font-size: 14px;
+    letter-spacing: 1px;
+    box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.05);
+}
+
+.profile-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-primary, .btn-danger {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Orbitron', 'Rajdhani', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #0077b6 0%, #00b4d8 50%, #0077b6 100%);
+    color: #ffffff;
+    border: 1px solid #48cae4;
+    box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+}
+
+.btn-primary:hover {
+    background: rgba(0, 229, 255, 0.25);
+    border-color: #00e5ff;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.7);
+}
+
+.btn-danger {
+    background: rgba(255, 107, 107, 0.08);
+    color: #ff8787;
+    border: 1.5px solid rgba(255, 107, 107, 0.45);
+}
+
+.btn-danger:hover {
+    background: rgba(255, 107, 107, 0.2);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+}

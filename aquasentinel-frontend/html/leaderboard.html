@@ -2,47 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aqua Sentinel - Fleet Leaderboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=stylesheet" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- External Stylesheets -->
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/leaderboard.css">
+    <link rel="stylesheet" href="../css/profile.css">
 </head>
-<body>
-<div class="ocean-bg">
-    <div class="light-rays"></div>
-    <div class="sonar-grid"></div>
-    <div class="ocean-floor"><div class="coral-silhouette"></div></div>
-</div>
+<body class="profile-body">
+<div class="ocean-bg"></div>
 
-<div class="glass-container leaderboard-container">
-    <div class="hud-corner top-left"></div>
-    <div class="hud-corner top-right"></div>
-    <div class="hud-corner bottom-left"></div>
-    <div class="hud-corner bottom-right"></div>
+<div class="profile-container" style="max-width: 750px;">
+    <div class="status-badge">
+        <div class="pulse-dot"></div>
+        GLOBAL INTEL // LEADERBOARD
+    </div>
+    <h1>FLEET RANKINGS</h1>
 
-    <div class="status-badge"><span class="pulse-dot"></span> GLOBAL INTEL // LEADERBOARD</div>
-    <h1 class="game-title">FLEET RANKINGS</h1>
-
-    <div class="table-wrapper">
-        <table class="leaderboard-table">
+    <div style="margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left; font-family: 'Rajdhani', sans-serif;">
             <thead>
-            <tr>
-                <th>RANK</th>
-                <th>COMMANDER</th>
-                <th>HIGHEST WAVE</th>
-                <th>SCORE</th>
+            <tr style="border-bottom: 1px solid rgba(0, 229, 255, 0.3); color: #8ab4f8; font-family: 'Orbitron', sans-serif; font-size: 12px; letter-spacing: 2px;">
+                <th style="padding: 12px;">RANK</th>
+                <th style="padding: 12px;">COMMANDER</th>
+                <th style="padding: 12px; text-align: center;">BEST COMBO</th>
+                <th style="padding: 12px; text-align: right;">SCORE</th>
             </tr>
             </thead>
             <tbody id="leaderboard-body">
-            <tr><td colspan="4" style="text-align: center; color: #8ab4f8;">Syncing fleet telemetry...</td></tr>
+            <tr>
+                <td colspan="4" style="text-align: center; padding: 25px; color: #00e5ff; font-family: 'Orbitron', sans-serif;">Syncing fleet telemetry...</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="profile-actions" style="margin-top: 25px;">
-        <a href="../index.html" class="btn-secondary">« RETURN TO COMMAND MENU</a>
-    </div>
+    <div class="profile-actions">
+        <button onclick="window.location.href='../index.html'" class="btn-primary">« Return to Command Menu</button>    </div>
 </div>
 
 <script src="../js/leaderboard.js"></script>

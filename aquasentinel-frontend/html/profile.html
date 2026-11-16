@@ -2,58 +2,215 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aqua Sentinel - Commander Dossier</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&display=stylesheet" rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/profile.css">
+    <title>Aqua Sentinel - Commander Profile</title>
+    <!-- Importing your exact game fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0b192c 0%, #01050a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .ocean-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(circle at 50% -20%, rgba(0, 180, 216, 0.3) 0%, transparent 60%),
+                linear-gradient(180deg, #02142d 0%, #010a18 50%, #000408 100%);
+            pointer-events: none;
+        }
+
+        .profile-container {
+            width: 100%;
+            max-width: 580px;
+            margin: 20px;
+            text-align: center;
+            background: linear-gradient(160deg, rgba(6, 26, 56, 0.9) 0%, rgba(2, 11, 26, 0.95) 100%);
+            backdrop-filter: blur(18px);
+            border: 1.5px solid rgba(0, 229, 255, 0.4);
+            border-radius: 14px;
+            padding: 35px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.1);
+            position: relative;
+            z-index: 3;
+        }
+
+        .profile-container h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #00e5ff;
+            letter-spacing: 2.5px;
+            margin-bottom: 25px;
+            font-size: 26px;
+            text-shadow: 0 0 15px rgba(0, 229, 255, 0.6);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .profile-card {
+            background: rgba(1, 10, 24, 0.7);
+            border: 1.5px solid rgba(0, 229, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.05);
+        }
+
+        .card-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #8ab4f8;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .stat-highlight {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            color: #00ffaa;
+            text-shadow: 0 0 12px rgba(0, 255, 170, 0.6);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            color: #00e5ff;
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+        }
+
+        .achievements-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .achievements-section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8ab4f8;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .achievement-badge {
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.35);
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-family: 'Rajdhani', sans-serif;
+            box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.05);
+        }
+
+        .profile-actions {
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-primary, .btn-danger {
+            flex: 1;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #0077b6 0%, #00b4d8 50%, #0077b6 100%);
+            color: #ffffff;
+            border: 1px solid #48cae4;
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: rgba(0, 229, 255, 0.25);
+            border-color: #00e5ff;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.7);
+        }
+
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.08);
+            color: #ff8787;
+            border: 1.5px solid rgba(255, 107, 107, 0.45);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 107, 107, 0.2);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.5);
+        }
+    </style>
 </head>
-
-<!--
-      Base template structured with AI.
-      Relative pathing (../) and specific UI data mapping customized by me.
- -->
-
 <body>
-<div class="ocean-bg">
-    <div class="light-rays"></div>
-    <div class="sonar-grid"></div>
-    <div class="ocean-floor"><div class="coral-silhouette"></div></div>
-</div>
+<div class="ocean-bg"></div>
 
-<div class="glass-container profile-container">
-    <div class="hud-corner top-left"></div>
-    <div class="hud-corner top-right"></div>
-    <div class="hud-corner bottom-left"></div>
-    <div class="hud-corner bottom-right"></div>
-
-    <div class="status-badge"><span class="pulse-dot"></span> COMMAND RECORD // DOSSIER</div>
-    <h1 class="game-title">COMMANDER PROFILE</h1>
+<div class="profile-container">
+    <h1>Commander Profile</h1>
 
     <div class="profile-grid">
         <div class="profile-card">
-            <h3>CALLSIGN</h3>
-            <p id="profile-username" class="stat-highlight">Loading...</p>
+            <span class="card-label">Callsign</span>
+            <div class="stat-value" id="profile-username">Shazmina</div>
         </div>
         <div class="profile-card">
-            <h3>HIGHEST SCORE</h3>
-            <p id="profile-highscore" class="stat-highlight">0</p>
+            <span class="card-label">Highest Score</span>
+            <div class="stat-highlight" id="profile-highscore">0</div>
         </div>
         <div class="profile-card">
-            <h3>GAMES PLAYED</h3>
-            <p id="profile-games" class="stat-value">0</p>
+            <span class="card-label">Games Played</span>
+            <div class="stat-value" id="profile-games">0</div>
         </div>
         <div class="profile-card">
-            <h3>HIGHEST WAVE</h3>
-            <p id="profile-wave" class="stat-value">0</p>
+            <span class="card-label">Best Combo</span>
+            <div class="stat-highlight" id="profile-combo">0</div>
         </div>
+    </div>
+
+    <div class="achievements-section">
+        <h3>Achievements</h3>
+        <div class="achievement-badge">💎 First Win</div>
+        <div class="achievement-badge">💎 3 Games</div>
+        <div class="achievement-badge">💎 Combo x5</div>
     </div>
 
     <div class="profile-actions">
-        <a href="../index.html" class="btn-secondary">« RETURN TO COMMAND MENU</a>
+        <button onclick="window.location.href='settings.html'" class="btn-primary">Account Settings</button>
+        <button onclick="logout()" class="btn-danger">Log Out</button>
     </div>
 </div>
 
-<script src="../js/profile.js"></script>
+<script src="profile.js"></script>
 </body>
 </html>

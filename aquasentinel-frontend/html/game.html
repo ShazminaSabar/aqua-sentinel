@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aqua Sentinel - Active Deployment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/game.css">
+</head>
+<body>
+
+<div class="ocean-bg">
+    <div class="light-rays"></div>
+    <div class="sonar-grid"></div>
+    <div class="ocean-floor"><div class="coral-silhouette"></div></div>
+</div>
+
+<canvas id="gameCanvas"></canvas>
+
+<div class="game-hud-top">
+    <div class="hud-box health-box">
+        <span class="hud-icon">❤️</span>
+        <div class="health-container">
+            <span class="hud-label-sm">Base Health</span>
+            <div class="health-bar-bg">
+                <div id="base-health-fill" class="health-bar-fill" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="hud-pill"><span class="hud-label-sm">Score</span><span id="hud-score" class="hud-val">0</span></div>
+    <div class="hud-pill"><span class="hud-label-sm">Time</span><span id="hud-time" class="hud-val">00:00</span></div>
+    <button class="btn-pause" onclick="togglePause()">⏸</button>
+</div>
+
+<div class="game-dock left-dock">
+    <span class="hud-label-sm">Torpedoes</span>
+    <div class="dock-content"><span class="torpedo-icon">🚀</span><span id="hud-torpedoes" class="dock-val">3</span></div>
+</div>
+
+<div class="game-dock right-dock">
+    <span class="hud-label-sm">Energy</span>
+    <div class="dock-content"><div class="energy-bar-bg"><div id="hud-energy-fill" class="energy-bar-fill" style="width: 100%;"></div></div></div>
+</div>
+
+<div id="threat-alert-card" class="threat-card">
+    <div class="threat-header">⚠️ Threat Detected!</div>
+    <p>Solve the challenge to neutralise the target.</p>
+</div>
+
+<!-- GAME PAUSED MODAL -->
+<div id="pause-modal" class="modal-overlay">
+    <div class="menu-card">
+        <h2 class="menu-title">Game Paused</h2>
+        <div class="menu-actions">
+            <button class="btn-menu-action" onclick="togglePause()">
+                <span class="menu-icon">▶</span> Resume
+            </button>
+            <!-- Navigates directly to the shared settings page -->
+            <button class="btn-menu-action" onclick="window.location.href='settings.html'">
+                <span class="menu-icon">⚙️</span> System Calibration
+            </button>
+            <button class="btn-menu-action" onclick="openAccountSettings()">
+                <span class="menu-icon">👤</span> Account Settings
+            </button>
+            <button class="btn-menu-action" onclick="window.location.href='../index.html'">
+                <span class="menu-icon">🏠</span> Main Menu
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ACCOUNT SETTINGS MODAL -->
+<div id="account-settings-modal" class="modal-overlay">
+    <div class="menu-card">
+        <h2 class="menu-title">Account Settings</h2>
+        <div class="account-group">
+            <label class="settings-label">Change Username</label>
+            <input type="text" id="new-username-input" class="account-input" placeholder="Enter new username" autocomplete="off">
+            <button class="btn-menu-action" onclick="updateUsername()">Update Username</button>
+        </div>
+        <div class="account-group separator-top">
+            <label class="settings-label">Change Password</label>
+            <input type="password" id="current-password-input" class="account-input" placeholder="Current Password" autocomplete="off">
+            <input type="password" id="new-password-input" class="account-input" placeholder="New Password" autocomplete="off">
+            <button class="btn-menu-action" onclick="updatePassword()">Update Password</button>
+        </div>
+        <div class="menu-actions" style="margin-top: 15px;">
+            <button class="btn-menu-action" onclick="closeAccountSettings()">Back</button>
+        </div>
+    </div>
+</div>
+
+<!-- FISH API & GAME OVER MODALS -->
+<div id="api-modal" class="modal-overlay">
+    <div class="modal-card">
+        <div class="status-badge"><span class="pulse-dot"></span> SECURITY OVERRIDE</div>
+        <h3 class="modal-title">Identify the number of fish in the picture.</h3>
+        <p class="modal-sub">Enter the number of fish:</p>
+        <div class="puzzle-screen"><p id="api-loading-text">Intercepting transmission...</p><img id="fish-puzzle-img" src="" alt="Fish Puzzle" style="display: none;"></div>
+        <form onsubmit="verifyFishSolution(event)" class="puzzle-form">
+            <input type="number" id="fish-answer-input" placeholder="e.g. 1" min="0" max="20" required autocomplete="off">
+            <button type="submit" class="btn-verify">Submit</button>
+        </form>
+        <p id="api-feedback" class="error-msg"></p>
+    </div>
+</div>
+
+<div id="success-modal" class="modal-overlay">
+    <div class="success-card">
+        <div class="success-check">✓</div>
+        <h2 class="success-title">Correct!</h2>
+        <p class="success-sub">Target Neutralised!</p>
+        <div class="success-badge-box"><div class="mini-sub-icon">🛥️</div></div>
+        <p id="success-reward-text" class="reward-text">+100 points, Combo x2</p>
+        <button class="btn-continue" onclick="closeSuccessModal()">Continue</button>
+    </div>
+</div>
+
+<div id="incorrect-modal" class="modal-overlay">
+    <div class="success-card" style="border-color: #e74c3c; background: #280f19;">
+        <div class="success-check" style="color: #e74c3c;">✕</div>
+        <h2 class="success-title" style="color: #e74c3c;">Incorrect!</h2>
+        <p class="success-sub">Target is still approaching!</p>
+        <div class="success-badge-box" style="border-color: #e74c3c;"><div class="mini-sub-icon">🛥️</div></div>
+        <p class="reward-text" style="color: #e74c3c; margin-bottom: 20px;">Time Penalty: -5s</p>
+        <button class="btn-continue" style="background: #e74c3c;" onclick="closeIncorrectModal()">Try Again</button>
+    </div>
+</div>
+
+<div id="game-over-modal" class="modal-overlay">
+    <div class="success-card" style="border-color: #ff4d6d; background: #280f19;">
+        <div class="success-check" style="color: #ff4d6d;">💀</div>
+        <h2 class="success-title" style="color: #ff4d6d;">Mission Failed</h2>
+        <p class="success-sub">Base sector defense grid compromised.</p>
+        <div class="success-badge-box" style="border-color: #ff4d6d;"><div class="mini-sub-icon">⚠️</div></div>
+        <p class="reward-text" style="color: #ff4d6d; margin-bottom: 20px;">Final Score: <span id="final-score">0</span></p>
+        <button class="btn-continue" style="background: #ff4d6d; color: #ffffff;" onclick="restartGame()">Restart Mission</button>
+    </div>
+</div>
+
+<div id="victory-modal" class="modal-overlay">
+    <div class="success-card" style="border-color: #00ffaa; background: #08281d;">
+        <div class="success-check">🏆</div>
+        <h2 class="success-title">Sector Secured!</h2>
+        <p class="success-sub">All hostile submarines neutralized successfully.</p>
+        <div class="success-badge-box"><div class="mini-sub-icon">🛡️</div></div>
+        <p class="reward-text">Final Score: <span id="victory-score">0</span></p>
+        <button class="btn-continue" onclick="restartGame()">Play Again</button>
+    </div>
+</div>
+
+<script src="../js/game.js"></script>
+</body>
+</html>

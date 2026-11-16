@@ -371,3 +371,57 @@ body {
     display: inline-block;
     text-align: center;
 }
+
+/* --- UI Improvements for Account Settings & Modals --- */
+.modal-content, #account-settings-modal .modal-content, #pause-modal .modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 30px;
+    background: rgba(5, 15, 30, 0.92);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.15);
+    backdrop-filter: blur(12px);
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+}
+
+/* Align inputs and buttons uniformly across modals */
+.modal-content input[type="text"],
+.modal-content input[type="password"],
+.modal-content button {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.modal-content label,
+.modal-content .field-label,
+.modal-content div[style*="color"] {
+    text-align: left;
+    width: 100%;
+}
+
+/* Sleek tactical button alignment */
+.modal-content button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    background: linear-gradient(135deg, #0099ff, #00e5ff);
+    color: #01050a;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+}
+
+.modal-content button:hover {
+    background: linear-gradient(135deg, #00bfff, #48cae4);
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.6);
+}

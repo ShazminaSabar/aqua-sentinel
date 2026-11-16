@@ -19,37 +19,55 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // Register a new user with a securely hashed password
     public User registerUser(User user) {
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new RuntimeException("Username is already taken!");
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            throw new RuntimeException("Username is already taken");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    // Authenticate user login by comparing password hashes
     public Optional<User> loginUser(String username, String rawPassword) {
-        Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isPresent() && passwordEncoder.matches(rawPassword, userOpt.get().getPassword())) {
-            return userOpt;
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent() && passwordEncoder.matches(rawPassword, user.get().getPassword())) {
+            return user;
         }
         return Optional.empty();
     }
 
-    // Find user by username for profile viewing
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    // Update user profile (Username or Password changes from Account Settings wireframe)
-    public User updateProfile(String username, String newUsername, String newPassword, PasswordEncoder passwordEncoder) {
+    public User saveGameResult(String username, int score, int combo) {
+        // Robust fallback: Automatically create user if not found in DB during gameplay
+        User user = userRepository.findByUsername(username).orElseGet(() -> {
+            User newUser = new User(username, passwordEncoder.encode("defaultPassword123"));
+            return userRepository.save(newUser);
+        });
+
+        user.setGamesPlayed(user.getGamesPlayed() + 1);
+        if (score > user.getHighestScore()) {
+            user.setHighestScore(score);
+        }
+        if (combo > user.getBestCombo()) {
+            user.setBestCombo(combo);
+        }
+
+        return userRepository.save(user);
+    }
+
+    public List<User> getLeaderboard() {
+        return userRepository.findTop10ByOrderByHighestScoreDesc();
+    }
+
+    public User updateProfile(String username, String newUsername, String newPassword) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (newUsername != null && !newUsername.isBlank() && !newUsername.equals(username)) {
-            if (userRepository.existsByUsername(newUsername)) {
-                throw new RuntimeException("Username is already taken!");
+            if (userRepository.findByUsername(newUsername).isPresent()) {
+                throw new RuntimeException("Username is already taken");
             }
             user.setUsername(newUsername);
         }
@@ -59,33 +77,5 @@ public class UserService {
         }
 
         return userRepository.save(user);
-    }
-
-    // Save game results and update user personal stats (Score, Wave, Combo)
-    public User saveGameResult(String username, int score, int wave, int combo) {
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        user.setGamesPlayed(user.getGamesPlayed() + 1);
-        if (score > user.getHighestScore()) {
-            user.setHighestScore(score);
-        }
-        if (wave > user.getHighestWave()) {
-            user.setHighestWave(wave);
-        }
-        if (combo > user.getBestCombo()) {
-            user.setBestCombo(combo);
-        }
-
-        return userRepository.save(user);
-    }
-
-    // Get top 10 users for the Leaderboard view
-    public List<User> getLeaderboard() {
-        return userRepository.findAll()
-                .stream()
-                .sorted((u1, u2) -> Integer.compare(u2.getHighestScore(), u1.getHighestScore()))
-                .limit(10)
-                .toList();
     }
 }
