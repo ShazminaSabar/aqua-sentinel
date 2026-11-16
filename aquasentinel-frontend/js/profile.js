@@ -3,7 +3,7 @@ const API_BASE_URL = 'http://localhost:8081/api';
 window.onload = async function() {
     const username = localStorage.getItem('aquaUser');
     if (!username) {
-        window.location.href = 'index.html';
+        window.location.href = '../index.html';
         return;
     }
 
@@ -26,5 +26,5 @@ window.onload = async function() {
 
 function logout() {
     localStorage.removeItem('aquaUser');
-    window.location.href = 'index.html';
+    window.location.href = '../index.html';
 }

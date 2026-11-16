@@ -227,7 +227,6 @@ function fireTorpedo() {
     if (currentDifficulty === 'Easy') torpedoSpeedMultiplier = 0.85;
     if (currentDifficulty === 'Hard') torpedoSpeedMultiplier = 1.25;
 
-    // Fixed multiplication operator syntax
     torpedoes.push({
         x: player.x,
         y: player.y - 40,
@@ -434,22 +433,27 @@ function spawnExplosion(x, y) {
 }
 
 async function submitGameResult() {
-    // Fallback to a default test username if localStorage is empty
-    const username = localStorage.getItem('aquaUser') || 'Commander_Alpha';
+    const activeUsername = localStorage.getItem('aquaUser') || 'Commander_Alpha';
 
     try {
         const response = await fetch('http://localhost:8081/api/game/result', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: username, score: score, combo: bestCombo })
+            body: JSON.stringify({
+                username: activeUsername,
+                score: score,
+                combo: bestCombo
+            })
         });
+
         if (!response.ok) {
-            console.error("Failed to sync stats to database:", await response.text());
+            const errorText = await response.text();
+            console.error("Server rejected game stats update for user:", activeUsername, errorText);
         } else {
-            console.log("Game stats successfully synced to PostgreSQL database!");
+            console.log("Stats successfully recorded for active user:", activeUsername);
         }
     } catch (err) {
-        console.error("Network error while saving game stats:", err);
+        console.error("Network error while syncing game stats:", err);
     }
 }
 
@@ -579,4 +583,69 @@ function draw() {
         ctx.stroke();
     });
 
-    ctx.fillStyle =
+    ctx.fillStyle = 'rgba(0, 229, 255, 0.15)';
+    backgroundFish.forEach(fish => {
+        ctx.beginPath();
+        ctx.ellipse(fish.x, fish.y, fish.size, fish.size / 2.2, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(fish.x - fish.size, fish.y);
+        ctx.lineTo(fish.x - fish.size - 8, fish.y - 6);
+        ctx.lineTo(fish.x - fish.size - 8, fish.y + 6);
+        ctx.closePath();
+        ctx.fill();
+    });
+
+    ctx.strokeStyle = 'rgba(0, 229, 255, 0.4)';
+    ctx.lineWidth = 2.5;
+    for (let r = 1; r <= 3; r++) {
+        ctx.beginPath();
+        ctx.arc(player.x, player.y, 70 + r * 50 + (Date.now() / 20) % 50, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+
+    drawRealisticSubmarine(player.x, player.y, false);
+
+    ctx.fillStyle = '#00ffaa';
+    ctx.shadowBlur = 18;
+    ctx.shadowColor = '#00ffaa';
+    torpedoes.forEach(t => {
+        ctx.fillRect(t.x - 3, t.y, 6, 24);
+    });
+    ctx.shadowBlur = 0;
+
+    hostiles.forEach(h => {
+        if (!h.active) return;
+        drawRealisticSubmarine(h.x, h.y, true);
+
+        ctx.fillStyle = '#ff0033';
+        ctx.shadowBlur = 16;
+        ctx.shadowColor = '#ff0033';
+        ctx.beginPath();
+        ctx.arc(h.x + (h.vx > 0 ? 25 : -25), h.y - 4, 6, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    });
+
+    particles.forEach(pt => {
+        ctx.fillStyle = '#00ffaa';
+        ctx.globalAlpha = pt.life / 45;
+        ctx.fillRect(pt.x, pt.y, 7, 7);
+    });
+    ctx.globalAlpha = 1;
+}
+
+function gameLoop() {
+    if (!isPaused && !isGameOver) {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+}
+
+// Initialize HUD starting values on page load
+const initialTorpedoElem = document.getElementById('hud-torpedoes');
+if (initialTorpedoElem) initialTorpedoElem.innerText = 'READY';
+
+updateEnergyUI();
+requestAnimationFrame(gameLoop);

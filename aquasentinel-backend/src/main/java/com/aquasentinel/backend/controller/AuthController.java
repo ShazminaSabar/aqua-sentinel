@@ -6,12 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final UserService userService;
@@ -38,23 +37,4 @@ public class AuthController {
         }
         return ResponseEntity.status(401).body("Invalid username or password");
     }
-
-    @PostMapping("/game/result")
-    public ResponseEntity<?> saveGameResult(@RequestBody Map<String, Object> payload) {
-        try {
-            String username = (String) payload.get("username");
-            int score = payload.containsKey("score") ? (int) payload.get("score") : 0;
-            int combo = payload.containsKey("combo") ? (int) payload.get("combo") : 0;
-
-            if (username == null) {
-                return ResponseEntity.badRequest().body("Username is required");
-            }
-
-            User updatedUser = userService.saveGameResult(username, score, combo);
-            return ResponseEntity.ok(updatedUser);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
 }

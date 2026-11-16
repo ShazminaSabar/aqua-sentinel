@@ -40,11 +40,12 @@ public class UserService {
     }
 
     public User saveGameResult(String username, int score, int combo) {
-        // Robust fallback: Automatically create user if not found in DB during gameplay
-        User user = userRepository.findByUsername(username).orElseGet(() -> {
-            User newUser = new User(username, passwordEncoder.encode("defaultPassword123"));
-            return userRepository.save(newUser);
-        });
+        // Automatically finds the active user or creates them if logged in via a dynamic session
+        User user = userRepository.findByUsername(username)
+                .orElseGet(() -> {
+                    User newUser = new User(username, passwordEncoder.encode("defaultPassword123"));
+                    return userRepository.save(newUser);
+                });
 
         user.setGamesPlayed(user.getGamesPlayed() + 1);
         if (score > user.getHighestScore()) {

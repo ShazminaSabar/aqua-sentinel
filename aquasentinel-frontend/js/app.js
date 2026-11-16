@@ -1,8 +1,6 @@
 /*
   Aqua Sentinel - App Logic & Auth Handling
   Base fetch structure and tab switching built with AI help.
-  Custom session handling (localStorage), removing popup alerts,
-  and smooth UI view transitions manually written by me.
 */
 
 // Base URL for your Spring Boot backend (matches your port 8081 or 8080)
